@@ -20,6 +20,20 @@ class LinkedList:
         :param item: The item to add to the list.
         """
         # TODO: Your code goes here.
+        if self.front is None:
+            # case1: empty list
+            self.front = ListItem()
+            self.front.data = item
+            self.front.next = None
+        else:
+            # case2: it is not an empty list
+            next_one = ListItem()
+            next_one.data = item
+            next_one.next = self.front
+            self.front = next_one
+
+
+
 
 
     def contains(self, item):
