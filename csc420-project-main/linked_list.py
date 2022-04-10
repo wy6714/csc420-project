@@ -30,6 +30,18 @@ class LinkedList:
         """
 
         # TODO: Your code goes here.
+        # if the list is empty:
+        if self.front is None:
+            return False
+
+        # if the list is not empty
+        list_pointer = self.front;
+        while list_pointer is not None:
+            if list_pointer.data == item:
+                return True
+            list_pointer = list_pointer.next
+
+        return False
 
 
     def __str__(self):
