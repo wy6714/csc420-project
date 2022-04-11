@@ -1,6 +1,5 @@
 import numpy as np
-from linked_list import LinkedList
-
+import linked_list
 
 class HashMap:
     def __init__(self, number_of_buckets):
@@ -46,7 +45,11 @@ class HashMap:
         divided by the number of buckets is greater than the maximum load factor.
         """
         # TODO: Your code goes here.
-
+        # create a new empty table
+        temp = HashMap(2 * self.number_of_buckets)
+        for i in range(2 * self.number_of_buckets):
+            self.table.append(None)
+            entry = hash(self)
 
     def add(self, value):
         """
@@ -59,6 +62,25 @@ class HashMap:
         :param value: The string value to add to the HashMap.
         """
         # TODO:  Your code goes here.
+        # Case1: added item already inside hashmap
+        if self.contains(value) is True:
+            return
+
+        # Case2: if it does not need to resize:
+        else:
+            if (self.number_of_items / self.number_of_buckets) <= self.maximum_load_factor:
+                entry = hash(value)
+
+                #if there is no list there, make one
+                if self.table[entry] is None:
+                    self.table[entry] = linked_list.LinkedList()
+
+                # add to list
+                self.table[entry].add(value)
+
+            #Case3:
+            #Need to resize - (number of items / the number of buckets) > load factor
+            else:
 
 
     def contains(self, value):
@@ -68,6 +90,21 @@ class HashMap:
         :return: boolean, True if the value is contained in the HashMap, False otherwise.
         """
         # TODO: Your code goes here.
+        entry = hash(value)
+        # Case1: There is no hash code for this value, return False
+        if self.table[entry] is None:
+            return False
+
+        # if there is such a hash code, search needed value in this bucket
+        else:
+            for element in self.table[entry]:
+                # Case2: Found the value in this hash code bucket, return True
+                if element == value:
+                    return True
+
+                # Case3: Cannot find the value, return False
+                else:
+                    return False
 
 
     def to_linked_list(self):

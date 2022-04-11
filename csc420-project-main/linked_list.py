@@ -32,10 +32,6 @@ class LinkedList:
             next_one.next = self.front
             self.front = next_one
 
-
-
-
-
     def contains(self, item):
         """
         Method to determine if an item is contained in the list.
@@ -56,7 +52,6 @@ class LinkedList:
             list_pointer = list_pointer.next
 
         return False
-
 
     def __str__(self):
         """
