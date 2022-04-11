@@ -1,6 +1,7 @@
 import numpy as np
 import linked_list
 
+
 class HashMap:
     def __init__(self, number_of_buckets):
         """
@@ -32,7 +33,7 @@ class HashMap:
         result = 0
         i = 1
         for character in value:
-            result += ord(character) * 31**(len(value) - i)
+            result += ord(character) * 31 ** (len(value) - i)
             i += 1
 
         return result % self.number_of_buckets
@@ -45,11 +46,18 @@ class HashMap:
         divided by the number of buckets is greater than the maximum load factor.
         """
         # TODO: Your code goes here.
-        # create a new empty table
+        # Convert the hashmap to linked list
+        hashmap_linkedlist = self.to_linked_list()
+
+        # Create a new empty table with double size, and make it replace the old size table
         temp = HashMap(2 * self.number_of_buckets)
-        for i in range(2 * self.number_of_buckets):
-            self.table.append(None)
-            entry = hash(self)
+        self.table = temp
+
+        # iterate hashmap linked list so that reinsert the items into the new size table
+        list_pointer = hashmap_linkedlist.front
+        while list_pointer is not None:
+            self.add(list_pointer.data)
+            list_pointer = list_pointer.next
 
     def add(self, value):
         """
@@ -71,17 +79,18 @@ class HashMap:
             if (self.number_of_items / self.number_of_buckets) <= self.maximum_load_factor:
                 entry = hash(value)
 
-                #if there is no list there, make one
+                # if there is no list there, make one
                 if self.table[entry] is None:
                     self.table[entry] = linked_list.LinkedList()
 
                 # add to list
                 self.table[entry].add(value)
 
-            #Case3:
-            #Need to resize - (number of items / the number of buckets) > load factor
+            # Case3:
+            # Need to resize - (number of items / the number of buckets) > load factor
             else:
-
+                self.resize()
+                return self.add(value)
 
     def contains(self, value):
         """
@@ -106,11 +115,16 @@ class HashMap:
                 else:
                     return False
 
-
     def to_linked_list(self):
         """
         Method to convert the HashMap to a LinkedList.
         :return: A linked list containing all items in this HashMap.
         """
         # TODO: Your code goes here.
+        hashmap_linkedlist = linked_list.LinkedList()
+        for entry in self.table:
+            for element in self.table[entry]:
+                hashmap_linkedlist.add(element)
+
+        return hashmap_linkedlist
 
