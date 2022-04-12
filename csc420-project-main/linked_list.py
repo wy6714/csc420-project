@@ -45,7 +45,7 @@ class LinkedList:
             return False
 
         # if the list is not empty
-        list_pointer = self.front;
+        list_pointer = self.front
         while list_pointer is not None:
             if list_pointer.data == item:
                 return True

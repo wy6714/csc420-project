@@ -77,7 +77,7 @@ class HashMap:
         # Case2: if it does not need to resize:
         else:
             if (self.number_of_items / self.number_of_buckets) <= self.maximum_load_factor:
-                entry = hash(value)
+                entry = self.hash(value)
 
                 # if there is no list there, make one
                 if self.table[entry] is None:
@@ -99,21 +99,21 @@ class HashMap:
         :return: boolean, True if the value is contained in the HashMap, False otherwise.
         """
         # TODO: Your code goes here.
-        entry = hash(value)
+        entry = self.hash(value)
         # Case1: There is no hash code for this value, return False
         if self.table[entry] is None:
             return False
 
-        # if there is such a hash code, search needed value in this bucket
+        # if there is such a hash code, iterate this hash code list to search needed value
         else:
-            for element in self.table[entry]:
-                # Case2: Found the value in this hash code bucket, return True
-                if element == value:
+            list_pointer = self.table[entry].front
+            while list_pointer is not None:
+                if list_pointer.data == value:
                     return True
+                list_pointer = list_pointer.next
 
-                # Case3: Cannot find the value, return False
-                else:
-                    return False
+            # Case3: Cannot find the value in the list, return false
+            return False
 
     def to_linked_list(self):
         """
