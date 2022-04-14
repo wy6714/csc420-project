@@ -210,17 +210,15 @@ class Boggle:
         """
 
         # 1.2 if the row/column is off board
-        if row < 0 or column < 0:
+        if row < 0 or row > 5 or column < 0 or column > 5:
             return
 
         # 1.3 already visited this dice
-        if self.boggle_board[row][column] in visited:
+        if visited[row][column] == 1:
             return
 
         # 2. if current word which is the last word with letter at row/column appended to it
         if row + 1 > 5 or row - 1 < 0 or column + 1 < 5 or column - 1 < 0:
-            # clear the visited array
-            visited = np.zeros((BOGGLE_DIMENSION, BOGGLE_DIMENSION))
 
             # if the last letter is Q, get free U
             if self.boggle_board[row][column] == 'Q':
@@ -236,13 +234,10 @@ class Boggle:
                     and self.dictionary_hash_map.contains(current_word) is True \
                     and found_words_hash_map.contains(current_word) is False:
 
-                right_word = current_word   # right_word is the current word that can be found in dictionary
-                current_word = ''           # clear the current word
-                return found_words_hash_map.add(right_word)
+                return found_words_hash_map.add(current_word)
 
-            # otherwise, just clear the current_word and return
+            # otherwise, return
             else:
-                current_word = ''
                 return
 
 
