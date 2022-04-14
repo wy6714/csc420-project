@@ -216,7 +216,7 @@ class Boggle:
             return
 
         # 2. if current word which is the last word with letter at row/column appended to it
-        if row + 1 > 5 and row - 1 < 0 and column + 1 < 5 and column - 1 < 0:
+        if row + 1 > 5 or row - 1 < 0 or column + 1 < 5 or column - 1 < 0:
 
             # if the last letter is Q, get free U
             if self.boggle_board[row][column] == 'Q':
