@@ -1,4 +1,3 @@
-
 from hash_map import HashMap
 import numpy as np
 
@@ -193,7 +192,6 @@ class Boggle:
         if len(current_word) > 8:
             return
 
-
         """
         four conner and four inside separately recursion
         # if on edge column of board
@@ -218,7 +216,7 @@ class Boggle:
             return
 
         # 2. if current word which is the last word with letter at row/column appended to it
-        if row + 1 > 5 or row - 1 < 0 or column + 1 < 5 or column - 1 < 0:
+        if row + 1 > 5 and row - 1 < 0 and column + 1 < 5 and column - 1 < 0:
 
             # if the last letter is Q, get free U
             if self.boggle_board[row][column] == 'Q':
@@ -240,26 +238,15 @@ class Boggle:
             else:
                 return
 
-
-
-
-
-
-
-
-
-
-
-
         # Perform 8 recursive calls on all surrounding Boggle dice.
         # Note that we check base case conditions at the start of the recursive call.
         # So we just need to make the recursive calls to the surrounding Boggle letters.
         # You get this for free.
-        self.boggle_all_words(found_words_hash_map, row - 1, column, current_word, visited)         # UP
-        self.boggle_all_words(found_words_hash_map, row - 1, column - 1, current_word, visited)     # UP LEFT
-        self.boggle_all_words(found_words_hash_map, row - 1, column + 1, current_word, visited)     # UP RIGHT
-        self.boggle_all_words(found_words_hash_map, row + 1, column, current_word, visited)         # DOWN
-        self.boggle_all_words(found_words_hash_map, row + 1, column - 1, current_word, visited)     # DOWN LEFT
-        self.boggle_all_words(found_words_hash_map, row + 1, column + 1, current_word, visited)     # DOWN RIGHT
-        self.boggle_all_words(found_words_hash_map, row, column - 1, current_word, visited)         # LEFT
-        self.boggle_all_words(found_words_hash_map, row, column + 1, current_word, visited)         # RIGHT
+        self.boggle_all_words(found_words_hash_map, row - 1, column, current_word, visited)  # UP
+        self.boggle_all_words(found_words_hash_map, row - 1, column - 1, current_word, visited)  # UP LEFT
+        self.boggle_all_words(found_words_hash_map, row - 1, column + 1, current_word, visited)  # UP RIGHT
+        self.boggle_all_words(found_words_hash_map, row + 1, column, current_word, visited)  # DOWN
+        self.boggle_all_words(found_words_hash_map, row + 1, column - 1, current_word, visited)  # DOWN LEFT
+        self.boggle_all_words(found_words_hash_map, row + 1, column + 1, current_word, visited)  # DOWN RIGHT
+        self.boggle_all_words(found_words_hash_map, row, column - 1, current_word, visited)  # LEFT
+        self.boggle_all_words(found_words_hash_map, row, column + 1, current_word, visited)  # RIGHT
