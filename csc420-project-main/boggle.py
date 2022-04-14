@@ -1,3 +1,4 @@
+
 from hash_map import HashMap
 import numpy as np
 
@@ -187,6 +188,43 @@ class Boggle:
         visited = np.ndarray.copy(last_visited)
 
         # TODO: Your code goes here.
+        # 1. return out of recursion
+        # 1.1 if the length of current word up to 8
+        if len(current_word) > 8:
+            return
+
+
+        """
+        four conner and four inside separately recursion
+        # if on edge column of board
+        # (0,0) -> only go right/down right/down
+        if row == 0 and column == 0:
+            self.boggle_all_words(found_words_hash_map, row, column + 1, current_word, visited)      # RIGHT
+            self.boggle_all_words(found_words_hash_map, row + 1, column + 1, current_word, visited)  # DOWN RIGHT
+            self.boggle_all_words(found_words_hash_map, row + 1, column, current_word, visited)      # DOWN
+
+        # (0,5) -> only go left/down left/down
+        elif: row == 5 and column == 0:
+            self.boggle_all_words(found_words_hash_map, row, column - 1, current_word, visited)      #LEFT
+            self.boggle_all_words(found_words_hash_map, row + 1, column - 1, current_word, visited)  # DOWN LEFT
+        """
+
+        # 1.2 if the row/column is off board
+        if row < 0 or column < 0:
+            return
+
+        # 1.3 already visited this dice
+        if self.boggle_board[row][column] in visited:
+            return
+
+        # if current word which is the last word with letter at row/column appended to it
+
+
+
+
+
+
+
 
         
 
