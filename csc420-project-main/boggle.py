@@ -217,7 +217,33 @@ class Boggle:
         if self.boggle_board[row][column] in visited:
             return
 
-        # if current word which is the last word with letter at row/column appended to it
+        # 2. if current word which is the last word with letter at row/column appended to it
+        if row + 1 > 5 or row - 1 < 0 or column + 1 < 5 or column - 1 < 0:
+            # clear the visited array
+            visited = np.zeros((BOGGLE_DIMENSION, BOGGLE_DIMENSION))
+
+            # if the last letter is Q, get free U
+            if self.boggle_board[row][column] == 'Q':
+                current_word = current_word + 'QU'
+            else:
+                current_word = current_word + self.boggle_board[row][column]
+
+            # 3. if len(current_word)>2
+            #       and if the current word is inside the dictionary,
+            #       and if this word has not been found yet,
+            # add to found_word_hash_map
+            if len(current_word) > 2 \
+                    and self.dictionary_hash_map.contains(current_word) is True \
+                    and found_words_hash_map.contains(current_word) is False:
+
+                right_word = current_word   # right_word is the current word that can be found in dictionary
+                current_word = ''           # clear the current word
+                return found_words_hash_map.add(right_word)
+
+            # otherwise, just clear the current_word and return
+            else:
+                current_word = ''
+                return
 
 
 
@@ -226,7 +252,9 @@ class Boggle:
 
 
 
-        
+
+
+
 
         # Perform 8 recursive calls on all surrounding Boggle dice.
         # Note that we check base case conditions at the start of the recursive call.
