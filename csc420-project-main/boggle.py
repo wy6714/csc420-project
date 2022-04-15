@@ -144,11 +144,11 @@ class Boggle:
         Recursive function to find all words. Starting at a specific row, column.
 
         :param found_words_hash_map: A hash map containing the words found so far.
-        :param row: The current row on the Boggle board.
-        :param column: The current column on the Boggle board.
+        :param row: The current row on to Boggle board.
+        :param column: The current column on to Boggle board.
         :param current_word: The current word constructed by moving over the Boggle board.
         :param last_visited: The last visited 2-dimensional numpy array.
-                             To track which dice on the Boggle board have been visited.
+                             To track which dice on to Boggle board have been visited.
         :return:
         """
 
@@ -189,7 +189,7 @@ class Boggle:
         # TODO: Your code goes here.
         # 1. return out of recursion
         # 1.1 if the length of current word up to 8
-        if len(current_word) > 8:
+        if len(current_word) >= 8:
             return
 
         """
@@ -208,7 +208,7 @@ class Boggle:
         """
 
         # 1.2 if the row/column is off board
-        if row < 0 or row > 5 or column < 0 or column > 5:
+        if row < 0 or row > 4 or column < 0 or column > 4:
             return
 
         # 1.3 already visited this dice
@@ -216,27 +216,26 @@ class Boggle:
             return
 
         # 2. if current word which is the last word with letter at row/column appended to it
-        if row + 1 > 5 or row - 1 < 0 or column + 1 < 5 or column - 1 < 0:
+        # if the last letter is Q, get free U
+        if self.boggle_board[row][column] == 'Q':
+            current_word = current_word + 'QU'
+        else:
+            current_word = current_word + self.boggle_board[row][column]
 
-            # if the last letter is Q, get free U
-            if self.boggle_board[row][column] == 'Q':
-                current_word = current_word + 'QU'
-            else:
-                current_word = current_word + self.boggle_board[row][column]
+        # 3. if len(current_word)>2
+        #       and if the current word is inside the dictionary,
+        #       and if this word has not been found yet,
+        # add to found_word_hash_map
+        if len(current_word) > 2 \
+                and self.dictionary_hash_map.contains(current_word) is True \
+                and found_words_hash_map.contains(current_word) is False:
 
-            # 3. if len(current_word)>2
-            #       and if the current word is inside the dictionary,
-            #       and if this word has not been found yet,
-            # add to found_word_hash_map
-            if len(current_word) > 2 \
-                    and self.dictionary_hash_map.contains(current_word) is True \
-                    and found_words_hash_map.contains(current_word) is False:
+            found_words_hash_map.add(current_word)
 
-                return found_words_hash_map.add(current_word)
+            print(current_word)
 
-            # otherwise, return
-            else:
-                return
+        # mark this row/column as visited
+        visited[row][column] = 1
 
         # Perform 8 recursive calls on all surrounding Boggle dice.
         # Note that we check base case conditions at the start of the recursive call.

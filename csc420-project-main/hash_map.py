@@ -1,5 +1,5 @@
 import numpy as np
-import linked_list
+from linked_list import LinkedList
 
 
 class HashMap:
@@ -81,7 +81,7 @@ class HashMap:
 
                 # if there is no list there, make one
                 if self.table[entry] is None:
-                    self.table[entry] = linked_list.LinkedList()
+                    self.table[entry] = LinkedList()
 
                 # add to list
                 self.table[entry].add(value)
@@ -121,10 +121,18 @@ class HashMap:
         :return: A linked list containing all items in this HashMap.
         """
         # TODO: Your code goes here.
-        hashmap_linkedlist = linked_list.LinkedList()
-        for entry in self.table:
-            for element in self.table[entry]:
-                hashmap_linkedlist.add(element)
-
+        hashmap_linkedlist = LinkedList()
+        for entry in range(self.number_of_buckets):
+            if self.table[entry] is not None:
+                list_pointer = self.table[entry].front
+                while list_pointer is not None:
+                    hashmap_linkedlist.add(list_pointer.data)
+                    list_pointer = list_pointer.next
         return hashmap_linkedlist
+
+
+
+
+
+
 
